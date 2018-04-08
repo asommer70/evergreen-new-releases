@@ -1,0 +1,18 @@
+# File name: App.py
+#:kivy 1.10.0
+
+<Layout>:
+    Button:
+        id: save_button
+        size_hint: (0.2, 0.1)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        text: 'Save'
+        color: 0,1,0,1
+        font_size: 20
+
+    TextInput:
+        id: url_input
+        size_hint: (0.2, 0.1)
+        pos_hint: {'x':0.5, 'y': 0.5}
+        multiline: False
+        font_size: 16
