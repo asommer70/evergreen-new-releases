@@ -10,6 +10,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
+from kivy.uix.image import Image, AsyncImage
 
 
 class Grid(GridLayout):
@@ -57,8 +58,14 @@ class EvergreenNewReleases(App):
 
         # anchor = Anchor(anchor_x='center', anchor_y='top')
         # anchor.add_widget( Button(text='center top', background_color=(1,0,0,1), size_hint=(None, None), size=(50,50) ))
+
         floater = Float()
-        floater.add_widget(anchor)
+
+        self.pole_cats = Image(source='img/pole_cats.jpg', color=[1,0,0,1], size_hint=(0.5,0.5), pos_hint={'x':0, 'y':0})
+        # floater.add_widget(self.pole_cats)
+
+        self.farva = AsyncImage(source='http://download.gamezone.com/uploads/image/data/1115062/super_trooper_car_ramrod.jpg',  color=[1,0,0,1], size_hint=(0.4,0.4), pos_hint={'x':0.3, 'y':0.3})
+        floater.add_widget(self.farva)
         return floater
 
 
