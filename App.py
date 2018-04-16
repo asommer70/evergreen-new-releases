@@ -5,70 +5,56 @@ from kivy.app import App
 from kivy.lang.builder import Builder
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image, AsyncImage
-from kivy.uix.video import Video
-from kivy.uix.videoplayer import VideoPlayer
-
-class Grid(GridLayout):
-    def press_beans(self, *args):
-        print('self.ids:', self.ids)
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 
-class Settings(GridLayout):
-    def __init__(self, **kwargs):
-        super(Settings, self).__init__(**kwargs)
-        self.cols = 2
-
-        self.add_widget(Label(text='Evergreen URL:'))
-
-        self.url = TextInput(multiline=False)
-        self.add_widget(self.url)
-
-
-class Anchor(AnchorLayout):
+class VideoGrid(GridLayout):
     pass
+    def __init__(self, **kwargs):
+        super(VideoGrid, self).__init__(**kwargs)
+        self.cols = 4
+        self.farva = AsyncImage(source='http://download.gamezone.com/uploads/image/data/1115062/super_trooper_car_ramrod.jpg',  color=[1,0,0,1], size_hint=(0.4,0.4), pos_hint={'x':0.3, 'y':0.3})
+        self.add_widget(self.farva)
+
+
+class SettingsGrid(GridLayout):
+    pass
+    # def __init__(self, **kwargs):
+    #     super(SettingsGrid, self).__init__(**kwargs)
+    #     self.cols = 2
+    #
+    #     self.add_widget(Label(text='Evergreen URL:'))
+    #
+    #     self.url = TextInput(multiline=False)
+    #     self.add_widget(self.url)
+
 
 class Float(FloatLayout):
     pass
 
 
+class SettingsScreen(Screen):
+    pass
+
+
+class VideoScreen(Screen):
+    pass
+
+
 class EvergreenNewReleases(App):
-
-    def play(self, *args):
-        print('self.vid.state:', self.vid.state)
-        self.vid.state='play'
-
-    def pause(self, *args):
-        self.vid.state='pause'
+    def open_settings(self, *args):
+        self.sm.current = 'settings_screen'
 
     def build(self):
-        # Builder.load_file('./app.kv')
-        # return Label()
-        # return Settings()
-
-        # grid = Grid(cols=3, padding=14, spacing=14)
-        # grid.row_default_height = 100
-        # grid.col_default_width = 75
-        # grid.col_force_default = True
-        # grid.row_force_default = True
-        #
-        # beans_button = Button(
-        #     text='Beans button...',
-        #     size_hint=(0.2, 0.2),
-        #     on_press=grid.press_beans,
-        #     pos_hint={'x': 0, 'y': 0}
-        # )
-        # grid.add_widget( beans_button)
-
-        # anchor = Anchor(anchor_x='center', anchor_y='top')
-        # anchor.add_widget( Button(text='center top', background_color=(1,0,0,1), size_hint=(None, None), size=(50,50) ))
-
-        floater = Float()
+        # floater = Float()
+        self.sm = ScreenManager()
+        video_screen = VideoScreen(name='video_screen')
+        settings_screen = SettingsScreen(name='settings_screen')
 
         # self.pole_cats = Image(source='img/pole_cats.jpg', color=[1,0,0,1], size_hint=(0.5,0.5), pos_hint={'x':0, 'y':0})
         # # floater.add_widget(self.pole_cats)
@@ -76,14 +62,16 @@ class EvergreenNewReleases(App):
         # self.farva = AsyncImage(source='http://download.gamezone.com/uploads/image/data/1115062/super_trooper_car_ramrod.jpg',  color=[1,0,0,1], size_hint=(0.4,0.4), pos_hint={'x':0.3, 'y':0.3})
         # floater.add_widget(self.farva)
 
-        # self.vid = Video(source='/srv/Movies/vokoscreen-2018-04-09_13-21-05.mkv')
-        self.vid = VideoPlayer(source='/srv/Movies/Testing_2.mp4.ogv', size_hint=(0.5,0.5), pos_hint={'x':0, 'y':0.3})
-        floater.add_widget(self.vid)
+        # floater.add_widget(SettingsGrid())
+        # floater.add_widget(VideoGrid())
 
-        # floater.add_widget(Button(text='play', size_hint=(0.1,0.1), pos_hint={'x':0,'y':0}, on_press=self.play))
-        # floater.add_widget(Button(text='pause', size_hint=(0.1,0.1), pos_hint={'x':0.2,'y':0}, on_press=self.pause))
+        self.sm.add_widget(video_screen)
+        self.sm.add_widget(settings_screen)
+        video_screen.add_widget(Button(text='Settings', on_press=self.open_settings))
 
-        return floater
+        # settings_screen.add_widget(Button(text='Back', on_press=self.open_settings, ))
+
+        return self.sm
 
 
 if __name__ == '__main__':
