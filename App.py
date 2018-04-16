@@ -11,7 +11,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 from kivy.uix.image import Image, AsyncImage
-
+from kivy.uix.video import Video
+from kivy.uix.videoplayer import VideoPlayer
 
 class Grid(GridLayout):
     def press_beans(self, *args):
@@ -37,6 +38,14 @@ class Float(FloatLayout):
 
 
 class EvergreenNewReleases(App):
+
+    def play(self, *args):
+        print('self.vid.state:', self.vid.state)
+        self.vid.state='play'
+
+    def pause(self, *args):
+        self.vid.state='pause'
+
     def build(self):
         # Builder.load_file('./app.kv')
         # return Label()
@@ -61,11 +70,19 @@ class EvergreenNewReleases(App):
 
         floater = Float()
 
-        self.pole_cats = Image(source='img/pole_cats.jpg', color=[1,0,0,1], size_hint=(0.5,0.5), pos_hint={'x':0, 'y':0})
-        # floater.add_widget(self.pole_cats)
+        # self.pole_cats = Image(source='img/pole_cats.jpg', color=[1,0,0,1], size_hint=(0.5,0.5), pos_hint={'x':0, 'y':0})
+        # # floater.add_widget(self.pole_cats)
+        #
+        # self.farva = AsyncImage(source='http://download.gamezone.com/uploads/image/data/1115062/super_trooper_car_ramrod.jpg',  color=[1,0,0,1], size_hint=(0.4,0.4), pos_hint={'x':0.3, 'y':0.3})
+        # floater.add_widget(self.farva)
 
-        self.farva = AsyncImage(source='http://download.gamezone.com/uploads/image/data/1115062/super_trooper_car_ramrod.jpg',  color=[1,0,0,1], size_hint=(0.4,0.4), pos_hint={'x':0.3, 'y':0.3})
-        floater.add_widget(self.farva)
+        # self.vid = Video(source='/srv/Movies/vokoscreen-2018-04-09_13-21-05.mkv')
+        self.vid = VideoPlayer(source='/srv/Movies/Testing_2.mp4.ogv', size_hint=(0.5,0.5), pos_hint={'x':0, 'y':0.3})
+        floater.add_widget(self.vid)
+
+        # floater.add_widget(Button(text='play', size_hint=(0.1,0.1), pos_hint={'x':0,'y':0}, on_press=self.play))
+        # floater.add_widget(Button(text='pause', size_hint=(0.1,0.1), pos_hint={'x':0.2,'y':0}, on_press=self.pause))
+
         return floater
 
 
